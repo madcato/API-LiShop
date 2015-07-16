@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716152006) do
+ActiveRecord::Schema.define(version: 20150716161428) do
+
+  create_table "api_keys", force: true do |t|
+    t.integer  "list_id"
+    t.string   "api_key"
+    t.string   "email"
+    t.boolean  "owner"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "articles", force: true do |t|
     t.integer  "list_id"
@@ -22,6 +31,11 @@ ActiveRecord::Schema.define(version: 20150716152006) do
     t.string   "shop"
     t.string   "prize"
     t.string   "checked"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "lists", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end

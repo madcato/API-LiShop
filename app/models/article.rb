@@ -1,4 +1,5 @@
 class Article < ActiveRecord::Base
+  belongs_to :list
   # list_id, name, qty, category, type, shop, prize, checked
   validates :list_id, presence: true, numericality: true
   validates :name, presence: true
@@ -7,3 +8,4 @@ class Article < ActiveRecord::Base
   
   self.inheritance_column = 'articleType'
 end
+

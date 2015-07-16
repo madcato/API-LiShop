@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  list_id: 1
+  list_id: one
   name: Pizza
   qty: 0
   category: 
@@ -11,7 +11,7 @@ one:
   checked: 0
 
 two:
-  list_id: 1
+  list_id: two
   name: Apples
   qty: 1
   category: Fruits
@@ -21,7 +21,7 @@ two:
   checked: 1
 
 three:
-  list_id: 1
+  list_id: one
   name: Coffe
   qty: 1
   category: Food
