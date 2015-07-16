@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>List:</strong>
+  <%= @article.list_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @article.name %>
+</p>
+
+<p>
+  <strong>Qty:</strong>
+  <%= @article.qty %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @article.category %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @article.type %>
+</p>
+
+<p>
+  <strong>Shop:</strong>
+  <%= @article.shop %>
+</p>
+
+<p>
+  <strong>Prize:</strong>
+  <%= @article.prize %>
+</p>
+
+<p>
+  <strong>Checked:</strong>
+  <%= @article.checked %>
+</p>
+
+<%= link_to 'Edit', edit_article_path(@article) %> |
+<%= link_to 'Back', articles_path %>

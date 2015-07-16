@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  list_id: 1
+  name: Pizza
+  qty: 0
+  category: 
+  type: 
+  shop: 
+  prize: 
+  checked: 0
+
+two:
+  list_id: 1
+  name: Apples
+  qty: 1
+  category: Fruits
+  type: 
+  shop: 
+  prize: 
+  checked: 1
+
+three:
+  list_id: 1
+  name: Coffe
+  qty: 1
+  category: Food
+  type: Bottle
+  shop: Mercadon
+  prize: 3.2
+  checked: 1
