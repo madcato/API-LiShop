@@ -12,6 +12,10 @@ class ApiKey < ActiveRecord::Base
   
   before_validation :generateUniqueApiKey
   
+  def self.all_without_owner
+      self.where(owner: false)
+  end
+  
   def generateUniqueApiKey
     self.api_key ||= generate_unique_secure_token()
   end

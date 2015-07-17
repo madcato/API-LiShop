@@ -41,7 +41,7 @@ class ApiKeysController < ApplicationController
     begin
       @sharedApiKey = ApiKey.find_by!(api_key: params[:sharedApiKey])
       @sharedApiKey.destroy
-      render json: ApiKey.all
+      render json: ApiKey.all_without_owner
     rescue ActiveRecord::RecordNotFound
       head :not_found
     end
@@ -64,6 +64,11 @@ class ApiKeysController < ApplicationController
     end
   end
 
+  # Return the shared keys and its emails. The owner user API_KEY is not returned.
+  def sharedApiKey 
+    render json: ApiKey.all_without_owner
+  end
+  
   private
   def checkParamsNewAccount
     head :bad_request if params[:paymentIdentifier].nil? || params[:secret].nil? || params[:receipt].nil? 

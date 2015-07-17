@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post 'api_keys/requestNewApiKey' => 'api_keys#requestNewApiKey'
   post 'api_keys/recoverApiKey' => 'api_keys#recoverApiKey'
   post 'api_keys/removeApiKey' => 'api_keys#removeApiKey'
+  post 'api_keys/sharedApiKey' => 'api_keys#sharedApiKey'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

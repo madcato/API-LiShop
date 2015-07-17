@@ -139,5 +139,25 @@ class ApiKeysControllerTest < ActionController::TestCase
     assert_instance_of Array, object, "API should return an Array"
   end  
   
+  # :sharedApiKey
+  test ":sharedApiKey without api_key must fail" do
+    post :sharedApiKey
+    assert_response :forbidden
+  end  
+  
+  test ":sharedApiKey with an invalid api_key must fail" do
+    @request.headers['api_key'] = @invalid_api_key
+    post :sharedApiKey
+    assert_response :unauthorized
+  end  
+
+  test ":sharedApiKey with an valid api_key must be ok and return a list" do
+    @request.headers['api_key'] = @api_key.api_key
+    post :sharedApiKey
+    assert_response :ok
+    object = JSON.parse(@response.body)
+    assert_instance_of Array, object, "API should return an Array"
+  end  
+    
   
 end
