@@ -135,7 +135,6 @@ The owner user **API\_KEY** is not returned.
 		- if **api_key** is not the owner -> http\_status: **403**, responseBody: "Forbidden"        
 </s>
 
-Every http request can be responded with a 503 status to indicate "Service Temporary Unavailable".
 
 #### Security
 
@@ -150,7 +149,10 @@ The version of the API will be indicated in the url.
 
 Sample:
 
-	http://api.server.com/1.0/articles.js
+	http://api.server.com/2.0/articles.js
+	
+But first one will not have a code:
+	http://api.server.com/articles.js
 
 ## Receipt verification using App Store
 
@@ -232,7 +234,7 @@ See document: *"OpenShift management"*
 
 ## Rails status
 
-400 => :bad_request
-401 => :unauthorized
-403 => :forbidden
-404 => :not_found
+* 400 => :bad_request
+* 401 => :unauthorized
+* 403 => :forbidden
+* 404 => :not_found
