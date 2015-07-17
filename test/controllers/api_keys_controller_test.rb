@@ -3,6 +3,7 @@ require 'test_helper'
 class ApiKeysControllerTest < ActionController::TestCase
   setup do
     @api_key = api_keys(:one)
+    @invalid_api_key = 'adnfaklhdaksdlkfjaslkd'
   end
   
   # :registerAccount
@@ -69,8 +70,7 @@ class ApiKeysControllerTest < ActionController::TestCase
   end  
 
   test "post with an invalid api_key must fail" do
-    INVALID_API_KEY = 'adnfaklhdaksdlkfjaslkd'
-    @request.headers['api_key'] = INVALID_API_KEY
+    @request.headers['api_key'] = @invalid_api_key
     post :requestNewApiKey, { email: 'veladan@gmail.com' }
     assert_response :unauthorized
   end  
@@ -97,7 +97,7 @@ class ApiKeysControllerTest < ActionController::TestCase
 
   test ":recoverApiKey post with an invalid email must fail" do
     post :recoverApiKey, {email: 'guirirui@guir.com'}
-    assert_response :bad_request
+    assert_response :not_found
   end  
 
   test " :recoverApiKey valid post should return ok" do
@@ -105,5 +105,39 @@ class ApiKeysControllerTest < ActionController::TestCase
     post :recoverApiKey, {email: @validUser.email}
     assert_response :ok
   end
+  
+  # :removeApiKey
+  test ":removeApiKey without api_key must fail" do
+    post :removeApiKey, {sharedApiKey: 'guirirui@guir.com'}
+    assert_response :forbidden
+  end  
+
+  test ":removeApiKey with an invalid api_key must fail" do
+    @request.headers['api_key'] = @invalid_api_key
+    post :removeApiKey, {sharedApiKey: 'guirirui@guir.com'}
+    assert_response :unauthorized
+  end  
+
+  test ":removeApiKey without sharedApiKey: must fail" do
+    @request.headers['api_key'] = @api_key.api_key
+    post :removeApiKey
+    assert_response :bad_request
+  end  
+
+  test ":removeApiKey with an invalid sharedApiKey: must fail" do
+    @request.headers['api_key'] = @api_key.api_key
+    post :removeApiKey, {sharedApiKey: 'guirirui@guir.com'}
+    assert_response :not_found
+  end  
+
+  test ":removeApiKey with an valid sharedApiKey: must return ok and a list" do
+    @request.headers['api_key'] = @api_key.api_key
+    @otherUser = api_keys(:two)
+    post :removeApiKey, {sharedApiKey: @otherUser.api_key}
+    assert_response :ok
+    object = JSON.parse(@response.body)
+    assert_instance_of Array, object, "API should return an Array"
+  end  
+  
   
 end

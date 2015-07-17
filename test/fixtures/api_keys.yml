@@ -3,7 +3,7 @@
 one:
   list: one
   api_key: MyStringasdfadgadgasdga
-  email: velad@veladan.com
+  email:
   owner: true
 
 two:

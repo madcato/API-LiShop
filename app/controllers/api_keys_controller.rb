@@ -1,6 +1,7 @@
 class ApiKeysController < ApplicationController
   before_action :checkParamsNewAccount, :only => [:registerAccount]
   before_action :checkParamsIncludeEmail, :only => [:requestNewApiKey, :recoverApiKey]
+  before_action :checkParamsIncludeSharedApiKey, :only => [:removeApiKey]
   before_action :checkSecret, :only => [:registerAccount]
   before_action :checkApiKey, :except => [:registerAccount, :recoverApiKey]
 
@@ -11,7 +12,7 @@ class ApiKeysController < ApplicationController
       # TODO: Send api_key to params[email]
       head :ok
     rescue ActiveRecord::RecordNotFound
-      head :bad_request
+      head :not_found
     end
     
   end
@@ -35,6 +36,17 @@ class ApiKeysController < ApplicationController
     end
   end
 
+  #  To close access to other user.
+  def removeApiKey
+    begin
+      @sharedApiKey = ApiKey.find_by!(api_key: params[:sharedApiKey])
+      @sharedApiKey.destroy
+      render json: ApiKey.all
+    rescue ActiveRecord::RecordNotFound
+      head :not_found
+    end
+  end
+  
   # To create or recover an account.
   def registerAccount
     @list = List.find_or_create_by(paymentIdentifier: params[:paymentIdentifier])
@@ -61,6 +73,10 @@ class ApiKeysController < ApplicationController
     head :bad_request if params[:email].nil? 
   end
 
+  def checkParamsIncludeSharedApiKey
+    head :bad_request if params[:sharedApiKey].nil? 
+  end
+
   def checkSecret
     secret = params[:secret]
     return true if secret.nil? || secret == Rails4Example::Application.config.api_secret
@@ -70,7 +86,7 @@ class ApiKeysController < ApplicationController
   end
   
   def checkApiKey
-    if request.headers[:api_key].nil?
+    if request.headers['api_key'].nil?
       head :forbidden 
     else 
       begin
