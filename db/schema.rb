@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716205423) do
+ActiveRecord::Schema.define(version: 20150717082852) do
 
   create_table "api_keys", force: true do |t|
     t.integer  "list_id"
@@ -39,6 +39,9 @@ ActiveRecord::Schema.define(version: 20150716205423) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "paymentIdentifier"
+    t.string   "receipt"
   end
+
+  add_index "lists", ["paymentIdentifier"], name: "index_lists_on_paymentIdentifier"
 
 end
