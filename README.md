@@ -1,149 +1,235 @@
-# Rails 4 Sample App on OpenShift #
-Quickstart rails 4 application for openshift.
+# LiShop server specification
 
-The easiest way to install this application is to use the [OpenShift
-Instant Application][template]. If you'd like to install it
-manually, follow [these directions](#manual-installation).
+Pending tasks:     
+- Investigate how to share the account without the email. But the method must be super-easy for users to select one or another in roder to simplify UI interaction.
 
-## OpenShift Considerations ##
-These are some special considerations you may need to keep in mind when
-running your application on OpenShift.
+## Synchronization API
 
-### Database ###
-Your application is configured to use your OpenShift database in
-Production mode.
-Because it addresses these databases based on [OpenShift Environment
-Variables](http://red.ht/NvNoXC), you will need to change these if you
-want to use your application in Production mode outside of
-OpenShift.
+### Design
 
-By default the development and test environment is configured to use
-the sqlite3 database adapter.
+- For the main resource (Article) use a [RESTful API](http://en.wikipedia.org/wiki/Representational_state_transfer)
+- Many users or devices can access the same _LIST\_ID_ with its own _API\_KEY_.
+- The owner could remove any _API\_KEY_ that has access to its _LIST\_ID_.
+- The owner could request a new _API\_KEY_ and share it with other user to let them access to his list.
+- Each _API\_KEY_ should be used by only one user. But the same _API\_KEY_ can be set in several devices.
+- _LIST\_ID_ numbers never will leave ther server. 
 
-You can also speed up the `git push` process by excluding gems you don't need,
-based on the database you use in OpenShift. You can use the `BUNDLE_WITHOUT`
-environment variable for that:
+#### Model
 
-```
-$ rhc env set BUNDLE_WITHOUT="development test postgresql"
-```
+* List
+	- list_id
+	- paymentIdentifier 
+	- creationDate
+	- modificationDate
 
-Use the command above if you don't want to install any development gems and you
-are using OpenShift MySQL cartridge.
-
-### Assets ###
-Your application is set to precompile the assets every time you push
-to OpenShift. Any assets you commit to your repo will be preserved
-alongside those which are generated during the build.
-
-By adding `disable_asset_compilation` marker, you will disable asset compilation upon application deployment.
-
-### Security ###
-Since these quickstarts are shared code, we had to take special
-consideration to ensure that security related configuration variables
-was unique across applications.
-To accomplish this, we modified some of the configuration files (shown
-in the table below).
-Now instead of using the same default values, your application will
-generate it's own value using the `initialize_secret` function from `lib/openshift_secret_generator.rb`.
-
-This function uses a secure environment variable that only exists on
-your deployed application and not in your code anywhere.
-You can then use the function to generate any variables you need.
-Each of them will be unique so `initialize_secret(:a)` will differ
-from `initialize_secret(:b)` but they will also be consistent, so any
-time your application uses them (even across reboots), you know they
-will be the same.
-
-TLDR: You should copy/link the `.openshift/lib/openshift_secret_generator.rb`
-file into `./lib` folder and link the `secret_token.rb` and `session_store.rb`
-files into `./config/initializers` folder. Look at this quickstart for an
-example.
-
-### Development mode ###
-When you develop your Rails application in OpenShift, you can also enable the
-'development' environment by setting the `RAILS_ENV` environment variable,
-using the `rhc` client, like:
-
-```
-$ rhc env set RAILS_ENV=development
-```
-
-If you do so, OpenShift will run your application under 'development' mode.
-In development mode, your application will:
-
-* Show more detailed errors in browser
-* Skip static assets (re)compilation
-* Skip web server restart, as the code is reloaded automatically
-* Skip `bundle` command if the Gemfile is not modified
-
-Development environment can help you debug problems in your application
-in the same way as you do when developing on your local machine.
-However, we strong advise you to not run your application in this mode
-in production.
-
-##### Modified Files #####
-
-<table>
-  <tr>
-    <th>File</th>
-    <th>Variable</th>
-  </tr>
-  <tr>
-    <td>config/initializers/secret_token.rb</td> 
-    <td>Railsapp::Application.config.secret_token</td>
-  </tr>
-  <tr>
-    <td>config/initializers/session_store.rb</td>
-    <td>Railsapp::Application.config.session_store</td>
-  </tr>
-</table>
-
-## Manual Installation ##
-
-1. Create an account at https://www.openshift.com
-
-1. Create a rails application
-
-    ```
-    rhc app create railsapp ruby-2.0
-    ```
-
-   **Note:** This quickstart will not work with Ruby 1.8
+$ rails g scaffold List 
 
 
-1. Add database support to your application
+* ApiKey:
+	- list_id
+	- api_key
+	- email
+	- owner
+	- creationDate
+	- modificationDate
 
-    ```
-    rhc cartridge add -a railsapp -c mysql-5.5
-    ```
-
-    or
-
-    ```
-    rhc cartridge add -a railsapp -c postgresql-9.2
-    ```
-
-1. Add this upstream Rails quickstart repository
-
-    ```
-    cd railsapp
-    git remote add upstream -m master git://github.com/openshift/rails4-example.git
-    git pull -s recursive -X theirs upstream master
-    ```
-
-1. Push your new code
-
-    ```
-    git push
-    ```
-
-1. That's it! Enjoy your new Rails application!
+$ rails g scaffold ApiKey list_id:integer api_key:string email:string owner:boolean
 
 
-[template]: https://openshift.redhat.com/app/console/application_types
+* Article
+	- list_id
+	- name
+	- qty
+	- category
+	- type
+	- shop
+	- prize
+	- checked
+	
+$ rails g scaffold Article list_id:integer name:string qty:string category:string type:string shop:string prize:string checked:string
 
-License
--------
+#### Entry points
 
-This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to CC0 (http://creativecommons.org/publicdomain/zero/1.0/)
+- **Article RESTful CRUD.** [RESTful API](http://en.wikipedia.org/wiki/Representational_state_transfer)    
+To access this resource with any of its URL, the client must specify its _API\_KEY_ in the http header: "api_key" = "\<_API\_KEY_\>"    
+if **api_key** doesn't exits or it's not present in the query, the response will be -> http\_status: 401, responseBody: "Unauthorized"        
+	Sample URL:
+	- http://api.server.com/1.0/articles.js -> returns all the articles
+	- http://api.server.com/1.0/articles/2.js -> return article with _id_ = 2
+
+<s>- **recoverApiKey** To recover forgotten accounts.     
+The user will receive and email with his _API\_KEY_    
+	* Request parameters:    
+		- **email**    
+	* Responses:    
+		- On OK -> http\_status: 200, responseBody: _\<empty\>_     
+		- If **email** parameter not indicated -> http\_status: **400**, responseBody: "email parameter required"
+		- If **email** not found -> http\_status: **404**, responseBody: "email not found"
+</s>     
+
+- **requestNewApiKey** To invite a new user to access owner list.    
+The new user will receive and email with his _API\_KEY_.    
+Only the list owner can invite others users.      
+	* http header 
+		- **api_key**
+	* Request parameters:    
+		- **email**    
+	* Responses:    
+		- On OK -> http\_status: **200**, responseBody: _\<empty\>_     
+		- If **email** not indicated -> http\_status: **400**, responseBody: "email parameter required"
+		- If **api_key** not indicated or not found -> http\_status: **401**, responseBody: "Unauthorized"        
+		- if **api_key** is not the owner -> http\_status: **403**, responseBody: "Forbidden"        
+
+- **removeApiKey** To close access to other user.        
+	* http header 
+		- **api_key**
+	* Request parameters:    
+		- **sharedApiKey**    
+	* Responses:    
+		- On OK -> http\_status: **200**, responseBody:[ "**api_key**": { "**api_key**" : "\<_API\_KEY1_\>", "**email**" : "\<_email1_>"}, "**api_key**": { "**api_key**" : "\<_API\_KEY2_\>", "**email**" : "\<_email2_>"}]        
+		- If **sharedApiKey** not indicated -> http\_status: **400**, responseBody: "sharedApiKey parameter required"
+		- If **sharedApiKey** not found -> http\_status: **404**, responseBody: "sharedApiKeynot found"
+		- If **api_key** not indicated or not found -> http\_status: **401**, responseBody: "Unauthorized"        
+		- if **api_key** is not the owner -> http\_status: **403**, responseBody: "Forbidden"        
+
+- **registerAccount** To create or recover an account.     
+The user must specify the receipt to demostrate the new account payment. If it's the first time accesing, a new list will be created. If the account was previously created, only it's **API\_KEY** is returned. But each time is called this method, a new **API\_KEY** must be generated for security.    
+	* Request parameters:    
+		- **paymentIdentifier**
+		- **receipt**
+	* Responses:    
+		- On OK -> http\_status: 200, responseBody: { "**api_key**" : "\<_API\_KEY_\>"}
+		- If any parameter is not indicated -> http\_status: **400**, responseBody: "\<_param_\> parameter required"
+		- If **paymentIdentifier** not found -> http\_status: **404**, responseBody: "receipt not found"
+
+- **sharedApiKey** Return the shared keys and its emails.
+The owner user **API\_KEY** is not returned.             
+	* http header 
+		- **api_key**
+	* Request parameters:    
+	* Responses:    
+		- On OK -> http\_status: **200**, responseBody: [ "**api_key**": { "**api_key**" : "\<_API\_KEY1_\>", "**email**" : "\<_email1_>"}, "**api_key**": { "**api_key**" : "\<_API\_KEY2_\>", "**email**" : "\<_email2_>"}]
+		- If **api_key** not indicated or not found -> http\_status: **401**, responseBody: "Unauthorized"        
+		- if **api_key** is not the owner -> http\_status: **403**, responseBody: "Forbidden"        
+
+- **verifyReceipt** See section *"Receipt verification using App Store"*
+	* Request parameters:    
+		- **receipt** The base64 encoded receipt data.
+		- **deviceIdentifier** UUID base64 encoded. Unique identifier of the device.
+		- **debug** Optional. If set to any value, use sandbox varification.
+	* Responses:    
+		- On OK -> http\_status: 200, responseBody: _\<empty\>_ 
+		- If **receipt** is not indicated -> http\_status: **400**, responseBody: "receipt parameter required"
+		- If **deviceIdentifier** is not indicated -> http\_status: **400**, responseBody: "deviceIdentifier parameter required"
+
+- **deleteList** Remove all the data of a list. This method will be called if the user don't want to use/pay for the service. The **API\_KEY** must be associated to the owner.
+	* http header 
+		- **api_key**
+	* Request parameters:    
+	* Responses:    
+		- On OK -> http\_status: **200**, responseBody: _\<empty\>_ 
+		- If **api_key** not indicated or not found -> http\_status: **401**, responseBody: "Unauthorized"        
+		- if **api_key** is not the owner -> http\_status: **403**, responseBody: "Forbidden"        
+
+
+Every http request can be responded with a 503 status to indicate "Service Temporary Unavailable".
+
+#### Security
+
+- Users with a valid **API\_KEY** will access to its **LIST\_ID**. Required.
+- Each client could create new **API_KEY** for sharing his list with other users.
+- To recover forgotten **API\_KEY**, the user will have a button to request his **API\_KEY** using his **email**.
+- SSL: create an owned ssl certificate signed by a personal CA and use it in local to verify. Or verify server certificate with its MD5.
+
+### API Versioning
+
+The version of the API will be indicated in the url.
+
+Sample:
+
+	http://api.server.com/1.0/articles.js
+
+## Receipt verification using App Store
+
+Launch this verification method asynchronously.    
+This method is called when a client call the API method "**registerAccount**".      
+Make an http call to https://buy.itunes.apple.com/verifyReceipt or https://sandbox.itunes.apple.com/verifyReceipt for debugging.     
+
+### Send the receipt data to the App Store
+
+Create a JSON object with the following keys:
+
+- **receipt-data** The base64 encoded receipt data.
+- **password** Only used for receipts that contain auto-renewable subscriptions. Your app’s shared secret (a hexadecimal string).
+
+### Parse the Response
+
+The response’s payload is a JSON object that contains the following keys and values:
+
+- **status** Either 0 if the receipt is valid, or one of the error codes listed in Error Table
+- **receipt** A JSON representation of the receipt that was sent for verification
+
+#### Error table
+
+- **21000** 
+The App Store could not read the JSON object you provided.
+- **21002**
+The data in the receipt-data property was malformed or missing.
+- **21003**
+The receipt could not be authenticated.
+- **21004**
+The shared secret you provided does not match the shared secret on file for your account.
+Only returned for iOS 6 style transaction receipts for auto-renewable subscriptions.
+- **21005**
+The receipt server is not currently available.
+- **21006**
+This receipt is valid but the subscription has expired. When this status code is returned to your server, the receipt data is also decoded and returned as part of the response.
+Only returned for iOS 6 style transaction receipts for auto-renewable subscriptions.
+- **21007**
+This receipt is from the test environment, but it was sent to the production environment for verification. Send it to the test environment instead.
+- **21008**
+This receipt is from the production environment, but it was sent to the test environment for verification. Send it to the production environment instead.
+
+
+## Steps to install and configure the server
+
+See document: *"OpenShift management"*
+
+## Backup and restore methods
+
+See document: *"OpenShift management"*
+
+## To prevent attacks from internet
+
+To prevent brute force attacks, develop the following:
+
+### For services using api_key as authentication system. 
+
+To prevent brute force can do the following:
+
+- Save the IP of the peer.
+- Save the last date of the IP connection.
+- Save the last api_key of that IP.
+
+If at some time you contacted different api_key. It is a brute force attack, there must cancel.
+
+
+### To prevent attacks of DOS
+
+Count the numbers of connections per second. If there are many, cancel.
+
+### Server 
+
+Use OpenShift. non-scalable Rails 4 app with MySql 5.1
+
+## How to scale
+
+See document: *"OpenShift management"*
+
+
+## Rails status
+
+400 => :bad_request
+401 => :unauthorized
+403 => :forbidden
+404 => :not_found
