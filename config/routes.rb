@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :articles
 
   post 'api_keys/registerAccount' => 'api_keys#registerAccount'
+  post 'api_keys/requestNewApiKey' => 'api_keys#requestNewApiKey'
+  post 'api_keys/recoverApiKey' => 'api_keys#recoverApiKey'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

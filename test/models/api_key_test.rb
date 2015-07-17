@@ -30,13 +30,7 @@ class ApiKeyTest < ActiveSupport::TestCase
     apiKey.owner = nil
     assert_not apiKey.save
   end
-  
-  test "the has an invalid owner" do
-    apiKey = api_keys(:one)
-    apiKey.owner = 3
-    assert_not apiKey.save
-  end
-  
+
   test "create a new api key" do
     apiKey = ApiKey.new
     apiKey.list = lists(:one)

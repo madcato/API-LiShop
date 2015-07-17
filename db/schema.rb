@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150717082852) do
+ActiveRecord::Schema.define(version: 20150717085605) do
 
   create_table "api_keys", force: true do |t|
     t.integer  "list_id"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20150717082852) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "api_keys", ["api_key"], name: "index_api_keys_on_api_key"
 
   create_table "articles", force: true do |t|
     t.integer  "list_id"

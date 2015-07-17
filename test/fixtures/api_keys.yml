@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  list_id: one
-  api_key: MyString
+  list: one
+  api_key: MyStringasdfadgadgasdga
   email: velad@veladan.com
   owner: true
 
 two:
-  list_id: one
-  api_key: MyString
+  list: one
+  api_key: MyStringrqerqwerqerqwerw
   email: velad@veladan.com
   owner: false

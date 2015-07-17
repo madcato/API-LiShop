@@ -7,7 +7,6 @@ class ApiKey < ActiveRecord::Base
     share.validates :email, presence: true
     share.validates_format_of :email, :with => /.+@.+\..+/i
   end
-  validates :owner, presence: true
   validates :owner, :inclusion => {:in => [true, false]}
   
   
