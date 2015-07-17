@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   resources :articles
 
+  post 'api_keys/registerAccount' => 'api_keys#registerAccount'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -11,14 +11,16 @@ class ApiKeyTest < ActiveSupport::TestCase
     assert_not apiKey.save
   end
   
-  test "the has email" do
+  test "the share has email" do
     apiKey = api_keys(:one)
+    apiKey.owner = false
     apiKey.email = nil
     assert_not apiKey.save
   end
   
   test "the has an invalid email" do
     apiKey = api_keys(:one)
+    apiKey.owner = false
     apiKey.email = 'adfffa.dfa.ds'
     assert_not apiKey.save
   end

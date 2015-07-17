@@ -3,8 +3,10 @@ class ApiKey < ActiveRecord::Base
   # list_id:integer api_key:string email:string owner:boolean
   validates :list_id, presence: true, numericality: true
   validates :api_key, presence: true
-  validates :email, presence: true
-  validates_format_of :email, :with => /.+@.+\..+/i
+  with_options :unless => :is_owner? do |share|
+    share.validates :email, presence: true
+    share.validates_format_of :email, :with => /.+@.+\..+/i
+  end
   validates :owner, presence: true
   validates :owner, :inclusion => {:in => [true, false]}
   
@@ -17,5 +19,9 @@ class ApiKey < ActiveRecord::Base
 
   def generate_unique_secure_token
     SecureRandom.base64(24)
+  end
+  
+  def is_owner?
+    self.owner == true
   end
 end
