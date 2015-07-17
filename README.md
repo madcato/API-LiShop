@@ -19,6 +19,7 @@ Pending tasks:
 * List
 	- list_id
 	- paymentIdentifier 
+	- receipt
 	- creationDate
 	- modificationDate
 
@@ -62,7 +63,7 @@ The user will receive and email with his _API\_KEY_
 	* Request parameters:    
 		- **email**    
 	* Responses:    
-		- On OK -> http\_status: 200, responseBody: _\<empty\>_     
+		- On OK -> http\_status: 200, responseBody: _\<empty/>_     
 		- If **email** parameter not indicated -> http\_status: **400**, responseBody: "email parameter required"
 		- If **email** not found -> http\_status: **404**, responseBody: "email not found"
 </s>     
@@ -75,7 +76,7 @@ Only the list owner can invite others users.
 	* Request parameters:    
 		- **email**    
 	* Responses:    
-		- On OK -> http\_status: **200**, responseBody: _\<empty\>_     
+		- On OK -> http\_status: **200**, responseBody: _\<empty/>_     
 		- If **email** not indicated -> http\_status: **400**, responseBody: "email parameter required"
 		- If **api_key** not indicated or not found -> http\_status: **401**, responseBody: "Unauthorized"        
 		- if **api_key** is not the owner -> http\_status: **403**, responseBody: "Forbidden"        
@@ -112,25 +113,25 @@ The owner user **API\_KEY** is not returned.
 		- If **api_key** not indicated or not found -> http\_status: **401**, responseBody: "Unauthorized"        
 		- if **api_key** is not the owner -> http\_status: **403**, responseBody: "Forbidden"        
 
-- **verifyReceipt** See section *"Receipt verification using App Store"*
+<s>- **verifyReceipt** See section *"Receipt verification using App Store"*
 	* Request parameters:    
 		- **receipt** The base64 encoded receipt data.
 		- **deviceIdentifier** UUID base64 encoded. Unique identifier of the device.
 		- **debug** Optional. If set to any value, use sandbox varification.
 	* Responses:    
-		- On OK -> http\_status: 200, responseBody: _\<empty\>_ 
+		- On OK -> http\_status: 200, responseBody: _\<empty/>_ 
 		- If **receipt** is not indicated -> http\_status: **400**, responseBody: "receipt parameter required"
 		- If **deviceIdentifier** is not indicated -> http\_status: **400**, responseBody: "deviceIdentifier parameter required"
-
-- **deleteList** Remove all the data of a list. This method will be called if the user don't want to use/pay for the service. The **API\_KEY** must be associated to the owner.
+</s>
+<s>- **deleteList** Remove all the data of a list. This method will be called if the user don't want to use/pay for the service. The **API\_KEY** must be associated to the owner.
 	* http header 
 		- **api_key**
 	* Request parameters:    
 	* Responses:    
-		- On OK -> http\_status: **200**, responseBody: _\<empty\>_ 
+		- On OK -> http\_status: **200**, responseBody: _\<empty/>_ 
 		- If **api_key** not indicated or not found -> http\_status: **401**, responseBody: "Unauthorized"        
 		- if **api_key** is not the owner -> http\_status: **403**, responseBody: "Forbidden"        
-
+</s>
 
 Every http request can be responded with a 503 status to indicate "Service Temporary Unavailable".
 
