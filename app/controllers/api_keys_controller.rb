@@ -5,18 +5,6 @@ class ApiKeysController < ApplicationController
   before_action :checkSecret, :only => [:registerAccount]
   before_action :checkApiKey, :except => [:registerAccount, :recoverApiKey]
 
-  # To recover forgotten accounts.     
-  def recoverApiKey
-    begin
-      @api_key = ApiKey.find_by!(email: params[:email])
-      # TODO: Send api_key to params[email]
-      head :ok
-    rescue ActiveRecord::RecordNotFound
-      head :not_found
-    end
-    
-  end
-
   # To invite a new user to access owner list.  
   def requestNewApiKey
     # Only the owner can invite others

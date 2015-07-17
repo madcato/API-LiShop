@@ -88,23 +88,6 @@ class ApiKeysControllerTest < ActionController::TestCase
     end
     assert_response :ok
   end  
-
-  # :recoverApiKey  
-  test ":recoverApiKey post without email must fail" do
-    post :recoverApiKey
-    assert_response :bad_request
-  end  
-
-  test ":recoverApiKey post with an invalid email must fail" do
-    post :recoverApiKey, {email: 'guirirui@guir.com'}
-    assert_response :not_found
-  end  
-
-  test " :recoverApiKey valid post should return ok" do
-    @validUser = api_keys(:two)
-    post :recoverApiKey, {email: @validUser.email}
-    assert_response :ok
-  end
   
   # :removeApiKey
   test ":removeApiKey without api_key must fail" do

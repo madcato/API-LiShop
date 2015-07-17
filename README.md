@@ -69,7 +69,7 @@ The user will receive and email with his _API\_KEY_
 </s>     
 
 - **requestNewApiKey** To invite a new user to access owner list.    
-The new user will receive and email with his _API\_KEY_.    
+The user will receive a new _API\_KEY_ that must send to the invited user. Doing this way is the owner how send the email in its own name.       
 Only the list owner can invite others users.      
 	* http header 
 		- **api_key**
