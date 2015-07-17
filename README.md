@@ -123,6 +123,8 @@ The owner user **API\_KEY** is not returned.
 		- If **receipt** is not indicated -> http\_status: **400**, responseBody: "receipt parameter required"
 		- If **deviceIdentifier** is not indicated -> http\_status: **400**, responseBody: "deviceIdentifier parameter required"
 </s>
+
+  
 <s>- **deleteList** Remove all the data of a list. This method will be called if the user don't want to use/pay for the service. The **API\_KEY** must be associated to the owner.
 	* http header 
 		- **api_key**
