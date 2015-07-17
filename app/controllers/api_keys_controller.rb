@@ -89,18 +89,4 @@ class ApiKeysController < ApplicationController
     head :forbidden
     return false
   end
-  
-  def checkApiKey
-    if request.headers['api_key'].nil?
-      head :forbidden 
-    else 
-      begin
-        api_key = request.headers['api_key']
-        @api_key = ApiKey.find_by!(api_key: api_key)
-        @list = @api_key.list
-      rescue ActiveRecord::RecordNotFound
-        head :unauthorized
-      end
-    end
-  end
 end
