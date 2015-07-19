@@ -83,10 +83,19 @@ class ApiKeysControllerTest < ActionController::TestCase
   
   test "post with email must resturn ok and send an email" do
     @request.headers['api_key'] = @api_key.api_key
-    assert_difference('ApiKey.count') do
-      post :requestNewApiKey, { email: 'veladan@gmail.com' }
+    inviteeEmail = 'dani_vela@me.com'
+    assert_difference ['ApiKey.count', 'ActionMailer::Base.deliveries.size'], +1 do
+      post :requestNewApiKey, { email: inviteeEmail }
     end
+    invite_email = ActionMailer::Base.deliveries.last
+    assert_equal inviteeEmail, invite_email.to[0]
+    # TODO assert the inclusion of a attachment
+    
     assert_response :ok
+    object = JSON.parse(@response.body)
+    assert_not_nil object, "There was no response"
+    api_key = object['api_key']
+    assert_not_nil api_key
   end  
   
   # :removeApiKey

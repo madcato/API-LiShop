@@ -76,7 +76,7 @@ Only the list owner can invite others users.
 	* Request parameters:    
 		- **email**    
 	* Responses:    
-		- On OK -> http\_status: **200**, responseBody: _\<empty/>_     
+		- On OK -> http\_status: **200**, responseBody: { "**api_key**" : "\<_API\_KEY_\>"}
 		- If **email** not indicated -> http\_status: **400**, responseBody: "email parameter required"
 		- If **api_key** not indicated or not found -> http\_status: **401**, responseBody: "Unauthorized"        
 		- if **api_key** is not the owner -> http\_status: **403**, responseBody: "Forbidden"        

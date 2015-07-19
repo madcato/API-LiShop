@@ -16,8 +16,9 @@ class ApiKeysController < ApplicationController
       new_api_key.email = params[:email]
       new_api_key.owner = false
       if new_api_key.save
-        # TODO: Send invitation to params[email]
-        head :ok
+        # Send an email to the invitee with the new API_KEY import bundle
+        InvitationMailer.invitation_email(params[:email],new_api_key.api_key).deliver
+        render json: { api_key: new_api_key.api_key}
       else 
         head :internal_server_error
       end 
@@ -72,7 +73,7 @@ class ApiKeysController < ApplicationController
 
   def checkSecret
     secret = params[:secret]
-    return true if secret.nil? || secret == Rails4Example::Application.config.api_secret
+    return true if secret.nil? || secret == Rails.application.secrets.api_secret
   
     head :forbidden
     return false
