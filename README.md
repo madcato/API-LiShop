@@ -198,7 +198,12 @@ This receipt is from the production environment, but it was sent to the test env
 
 ## Steps to install and configure the server
 
-See document: *"OpenShift management"*
+Is obligatory to define three environment veriables to run de server in production and development:
+- **LISHOP\_API\_SECRET** any large string can be used
+- **LISHOP\_INVITATION\_MAIL** gmail account
+- **LISHOP\_INVITATION\_PASSWORD** password for sending mails
+
+In test mode only **LISHOP\_API\_SECRET** is needed
 
 ## Backup and restore methods
 
