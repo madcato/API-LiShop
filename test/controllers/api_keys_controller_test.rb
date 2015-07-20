@@ -89,7 +89,7 @@ class ApiKeysControllerTest < ActionController::TestCase
     end
     invite_email = ActionMailer::Base.deliveries.last
     assert_equal inviteeEmail, invite_email.to[0]
-    # TODO assert the inclusion of a attachment
+    
     
     assert_response :ok
     object = JSON.parse(@response.body)

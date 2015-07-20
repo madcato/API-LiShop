@@ -241,5 +241,6 @@ See document: *"OpenShift management"*
 
 * 400 => :bad_request
 * 401 => :unauthorized
+* 402 => :payment_required
 * 403 => :forbidden
 * 404 => :not_found
