@@ -1,7 +1,8 @@
 # LiShop server specification
 
-Pending tasks:     
-- Investigate how to share the account without the email. But the method must be super-easy for users to select one or another in roder to simplify UI interaction.
+
+[![Build Status](https://travis-ci.org/madcato/API-Lishop.svg?branch=master)](https://travis-ci.org/madcato/API-Lishop)
+[![codecov.io](https://codecov.io/github/madcato/API-Lishop/coverage.svg?branch=master)](https://codecov.io/github/madcato/API-Lishop?branch=master)
 
 ## Synchronization API
 
@@ -244,3 +245,18 @@ See document: *"OpenShift management"*
 * 402 => :payment_required
 * 403 => :forbidden
 * 404 => :not_found
+
+
+## Installation 
+
+Define the **API_LISHOP_SECRET** to define the secret API key to create accounts
+
+	export LISHOP_API_SECRET="XXXXXXXXXXXXXXXX"
+
+Execute **bundle** in production enviroment
+
+	bundle install --without postgresql mysql
+
+Execute **bundle** in development enviroment
+
+	bundle install --without postgresql mysql production
