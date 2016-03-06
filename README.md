@@ -1,8 +1,8 @@
-# LiShop server specification
-
-
 [![Build Status](https://travis-ci.org/madcato/API-LiShop.svg?branch=master)](https://travis-ci.org/madcato/API-LiShop)
 [![codecov.io](https://codecov.io/github/madcato/API-LiShop/coverage.svg?branch=master)](https://codecov.io/github/madcato/API-LiShop?branch=master)
+[![codebeat badge](https://codebeat.co/badges/f3ee3db5-0f44-4502-8320-5ac159561556)](https://codebeat.co/projects/github-com-madcato-api-lishop)
+
+# LiShop server specification
 
 ## Synchronization API
 
