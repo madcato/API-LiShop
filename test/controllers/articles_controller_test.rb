@@ -41,6 +41,15 @@ class ArticlesControllerTest < ActionController::TestCase
     assert_redirected_to article_path(assigns(:article))
   end
 
+  test "should create article in json" do
+    @request.headers['api_key'] = @api_key.api_key
+    assert_difference('Article.count') do
+      post :create, :format => :json, article: { category: @article.category, checked: @article.checked, list_id: @article.list_id, name: @article.name, prize: @article.prize, qty: @article.qty, shop: @article.shop, type: @article.type }
+    end
+
+    assert_response :success
+  end
+
   test "should show article" do
     @request.headers['api_key'] = @api_key.api_key
     get :show, id: @article
@@ -57,6 +66,12 @@ class ArticlesControllerTest < ActionController::TestCase
     @request.headers['api_key'] = @api_key.api_key
     patch :update, id: @article, article: { category: @article.category, checked: @article.checked, list_id: @article.list_id, name: @article.name, prize: @article.prize, qty: @article.qty, shop: @article.shop, type: @article.type }
     assert_redirected_to article_path(assigns(:article))
+  end
+
+  test "should update article in json" do
+    @request.headers['api_key'] = @api_key.api_key
+    patch :update, format: :json, id: @article, article: { category: @article.category, checked: @article.checked, list_id: @article.list_id, name: @article.name, prize: @article.prize, qty: @article.qty, shop: @article.shop, type: @article.type }
+    assert_response :success
   end
 
   test "should destroy article" do

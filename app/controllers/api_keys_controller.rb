@@ -45,11 +45,7 @@ class ApiKeysController < ApplicationController
       @account.owner = true
       if @account.save
         render json: { api_key: @account.api_key}
-      else
-        head :internal_server_error
       end
-    else 
-      head :internal_server_error
     end
   end
 

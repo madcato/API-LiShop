@@ -98,6 +98,21 @@ class ApiKeysControllerTest < ActionController::TestCase
     assert_not_nil api_key
   end  
   
+  test "request a new key with a not owner ApiKey mut be forbidden" do
+    @request.headers['api_key'] = api_keys(:two).api_key
+    inviteeEmail = 'dani_vela@me.com'
+    post :requestNewApiKey, { email: inviteeEmail }    
+    assert_response :forbidden
+  end
+  
+  test "request an apikey with an invalid email must resturn interval sever error" do
+    @request.headers['api_key'] = @api_key.api_key
+    inviteeEmail = 'dani.me.com'
+    post :requestNewApiKey, { email: inviteeEmail }  
+    
+    assert_response :internal_server_error
+  end  
+
   # :removeApiKey
   test ":removeApiKey without api_key must fail" do
     post :removeApiKey, {sharedApiKey: 'guirirui@guir.com'}
