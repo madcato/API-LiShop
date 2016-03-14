@@ -40,6 +40,12 @@ class ArticlesControllerTest < ActionController::TestCase
 
     assert_redirected_to article_path(assigns(:article))
   end
+  
+  test "should fail to create an article without qty" do
+    @request.headers['api_key'] = @api_key.api_key
+    post :create, :format => :json, article: { category: @article.category, checked: @article.checked, list_id: @article.list_id, shop: @article.shop, type: @article.type }
+    assert_response :unprocessable_entity
+  end
 
   test "should create article in json" do
     @request.headers['api_key'] = @api_key.api_key
@@ -74,6 +80,12 @@ class ArticlesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "should fail to update an article in json without qty" do
+    @request.headers['api_key'] = @api_key.api_key
+    patch :update, format: :json, id: @article, article: { category: @article.category, checked: @article.checked, list_id: @article.list_id, name: @article.name, prize: @article.prize, qty: nil, shop: @article.shop, type: @article.type }
+    assert_response :unprocessable_entity
+  end
+  
   test "should destroy article" do
     @request.headers['api_key'] = @api_key.api_key
     assert_difference('Article.count', -1) do
