@@ -14,26 +14,26 @@
       <img src="./assets/0.10.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2016-03-14T17:51:28+01:00">2016-03-14T17:51:28+01:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2016-03-14T18:10:25+01:00">2016-03-14T18:10:25+01:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">98.66%</span></span>
+    (<span class="covered_percent"><span class="green">98.67%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         1.64
+         1.67
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>32</b> files in total.
-    <b>448</b> relevant lines. 
-    <span class="green"><b>442</b> lines covered</span> and
+    <b>452</b> relevant lines. 
+    <span class="green"><b>446</b> lines covered</span> and
     <span class="red"><b>6</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -53,11 +53,11 @@
       <tr>
         <td class="strong"><a href="#48e1e92e7c60f1ef8fc4e2ca6aab389095d27180" class="src_link" title="app/controllers/api_keys_controller.rb">app/controllers/api_keys_controller.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>77</td>
-        <td>46</td>
-        <td>46</td>
+        <td>83</td>
+        <td>50</td>
+        <td>50</td>
         <td>0</td>
-        <td>2.0</td>
+        <td>2.2</td>
       </tr>
       
       <tr>
@@ -391,8 +391,8 @@
     <h3>app/controllers/api_keys_controller.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>46</b> relevant lines. 
-      <span class="green"><b>46</b> lines covered</span> and
+      <b>50</b> relevant lines. 
+      <span class="green"><b>50</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -655,208 +655,244 @@
         <li class="covered" data-hits="3" data-linenumber="43">
           <span class="hits">3</span>
           
-          <code class="ruby">      @account = ApiKey.new</code>
+          <code class="ruby">      saveList</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="44">
-          <span class="hits">3</span>
-          
-          <code class="ruby">      @account.list = @list</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="45">
-          <span class="hits">3</span>
-          
-          <code class="ruby">      @account.owner = true</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="46">
-          <span class="hits">3</span>
-          
-          <code class="ruby">      if @account.save</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="47">
-          <span class="hits">3</span>
-          
-          <code class="ruby">        render json: { api_key: @account.api_key}</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="48">
-          
-          
-          <code class="ruby">      end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="49">
+        <li class="never" data-hits="" data-linenumber="44">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="50">
+        <li class="never" data-hits="" data-linenumber="45">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="51">
+        <li class="never" data-hits="" data-linenumber="46">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="52">
-          
-          
-          <code class="ruby">  # Return the shared keys and its emails. The owner user API_KEY is not returned.</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="53">
+        <li class="covered" data-hits="1" data-linenumber="47">
           <span class="hits">1</span>
           
-          <code class="ruby">  def sharedApiKey </code>
+          <code class="ruby">  def saveList</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="54">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="3" data-linenumber="48">
+          <span class="hits">3</span>
           
-          <code class="ruby">    render json: ApiKey.all_without_owner</code>
+          <code class="ruby">    @account = ApiKey.new</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="49">
+          <span class="hits">3</span>
+          
+          <code class="ruby">    @account.list = @list</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="50">
+          <span class="hits">3</span>
+          
+          <code class="ruby">    @account.owner = true</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="51">
+          <span class="hits">3</span>
+          
+          <code class="ruby">    if @account.save</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="52">
+          <span class="hits">3</span>
+          
+          <code class="ruby">      render json: { api_key: @account.api_key}</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="53">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="54">
+          
+          
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="55">
           
           
-          <code class="ruby">  end</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="56">
           
           
-          <code class="ruby">  </code>
+          <code class="ruby">  # Return the shared keys and its emails. The owner user API_KEY is not returned.</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="57">
           <span class="hits">1</span>
           
-          <code class="ruby">  private</code>
+          <code class="ruby">  def sharedApiKey </code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="58">
           <span class="hits">1</span>
           
-          <code class="ruby">  def checkParamsNewAccount</code>
+          <code class="ruby">    render json: ApiKey.all_without_owner</code>
         </li>
       
-        <li class="covered" data-hits="7" data-linenumber="59">
-          <span class="hits">7</span>
+        <li class="never" data-hits="" data-linenumber="59">
           
-          <code class="ruby">    head :bad_request if params[:paymentIdentifier].nil? || params[:secret].nil? || params[:receipt].nil? </code>
+          
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="60">
           
           
-          <code class="ruby">  end</code>
+          <code class="ruby">  </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="61">
+        <li class="covered" data-hits="1" data-linenumber="61">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">  </code>
+          <code class="ruby">  private</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="62">
           <span class="hits">1</span>
           
-          <code class="ruby">  def checkParamsIncludeEmail</code>
+          <code class="ruby">  def checkParamsNewAccount</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="63">
-          <span class="hits">6</span>
+        <li class="covered" data-hits="7" data-linenumber="63">
+          <span class="hits">7</span>
           
-          <code class="ruby">    head :bad_request if params[:email].nil? </code>
+          <code class="ruby">    head :bad_request if params[:paymentIdentifier].nil?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="64">
+        <li class="covered" data-hits="7" data-linenumber="64">
+          <span class="hits">7</span>
+          
+          <code class="ruby">    head :bad_request if params[:secret].nil?</code>
+        </li>
+      
+        <li class="covered" data-hits="7" data-linenumber="65">
+          <span class="hits">7</span>
+          
+          <code class="ruby">    head :bad_request if params[:receipt].nil? </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="66">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="65">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="66">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  def checkParamsIncludeSharedApiKey</code>
-        </li>
-      
-        <li class="covered" data-hits="5" data-linenumber="67">
-          <span class="hits">5</span>
-          
-          <code class="ruby">    head :bad_request if params[:sharedApiKey].nil? </code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="68">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="69">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="70">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  def checkSecret</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="71">
-          <span class="hits">4</span>
-          
-          <code class="ruby">    secret = params[:secret]</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="72">
-          <span class="hits">4</span>
-          
-          <code class="ruby">    return true if secret.nil? || secret == Rails.application.secrets.api_secret</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="73">
+        <li class="never" data-hits="" data-linenumber="67">
           
           
           <code class="ruby">  </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="74">
+        <li class="covered" data-hits="1" data-linenumber="68">
           <span class="hits">1</span>
           
-          <code class="ruby">    head :forbidden</code>
+          <code class="ruby">  def checkParamsIncludeEmail</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="75">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="6" data-linenumber="69">
+          <span class="hits">6</span>
           
-          <code class="ruby">    return false</code>
+          <code class="ruby">    head :bad_request if params[:email].nil? </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="76">
+        <li class="never" data-hits="" data-linenumber="70">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="77">
+        <li class="never" data-hits="" data-linenumber="71">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="72">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def checkParamsIncludeSharedApiKey</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="73">
+          <span class="hits">5</span>
+          
+          <code class="ruby">    head :bad_request if params[:sharedApiKey].nil? </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="74">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="75">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="76">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def checkSecret</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="77">
+          <span class="hits">4</span>
+          
+          <code class="ruby">    secret = params[:secret]</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="78">
+          <span class="hits">4</span>
+          
+          <code class="ruby">    return true if secret.nil? || secret == Rails.application.secrets.api_secret</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="79">
+          
+          
+          <code class="ruby">  </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="80">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    head :forbidden</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="81">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    return false</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="82">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="83">
           
           
           <code class="ruby">end</code>

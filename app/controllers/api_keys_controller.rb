@@ -40,12 +40,16 @@ class ApiKeysController < ApplicationController
   def registerAccount
     @list = List.find_or_create_by(paymentIdentifier: params[:paymentIdentifier])
     if @list.save
-      @account = ApiKey.new
-      @account.list = @list
-      @account.owner = true
-      if @account.save
-        render json: { api_key: @account.api_key}
-      end
+      saveList
+    end
+  end
+  
+  def saveList
+    @account = ApiKey.new
+    @account.list = @list
+    @account.owner = true
+    if @account.save
+      render json: { api_key: @account.api_key}
     end
   end
 
@@ -56,7 +60,9 @@ class ApiKeysController < ApplicationController
   
   private
   def checkParamsNewAccount
-    head :bad_request if params[:paymentIdentifier].nil? || params[:secret].nil? || params[:receipt].nil? 
+    head :bad_request if params[:paymentIdentifier].nil?
+    head :bad_request if params[:secret].nil?
+    head :bad_request if params[:receipt].nil? 
   end
   
   def checkParamsIncludeEmail
