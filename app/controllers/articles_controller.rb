@@ -6,16 +6,39 @@ class ArticlesController < ApplicationController
   # GET /articles.json
   def index
     @articles = @list.articles.all
+    
+    if params[:updated_at].nil?
+      @articles = @list.articles.all
+    else
+      strDateTime = params[:updated_at];
+      dateTime = DateTime.parse(strDateTime)
+      dateTime = dateTime + 1.second
+      @articles = @list.articles.where("updated_at > ?",dateTime)
+    end
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { @articles = Article.select('id') if params[:onlyIds].nil?;render :json => @articles; }
+    end
   end
 
   # GET /articles/1
   # GET /articles/1.json
   def show
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render :json => @article }
+    end
   end
 
   # GET /articles/new
   def new
     @article = @list.articles.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render :json => @article }
+    end
   end
 
   # GET /articles/1/edit
@@ -30,7 +53,7 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       if @article.save
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
-        format.json { render :show, status: :created, location: @article }
+        format.json { render :json => @article, status: :created, location: @article }
       else
         format.html { render :new }
         format.json { render json: @article.errors, status: :unprocessable_entity }
