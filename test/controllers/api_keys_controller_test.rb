@@ -70,19 +70,19 @@ class ApiKeysControllerTest < ActionController::TestCase
   end  
 
   test "post with an invalid api_key must fail" do
-    @request.headers['api_key'] = @invalid_api_key
+    @request.headers['X-lishop-api-key'] = @invalid_api_key
     post :requestNewApiKey, { email: 'veladan@gmail.com' }
     assert_response :unauthorized
   end  
 
   test "post without email must fail" do
-    @request.headers['api_key'] = @api_key.api_key
+    @request.headers['X-lishop-api-key'] = @api_key.api_key
     post :requestNewApiKey
     assert_response :bad_request
   end  
   
   test "post with email must resturn ok and send an email" do
-    @request.headers['api_key'] = @api_key.api_key
+    @request.headers['X-lishop-api-key'] = @api_key.api_key
     inviteeEmail = 'dani_vela@me.com'
     assert_difference ['ApiKey.count', 'ActionMailer::Base.deliveries.size'], +1 do
       post :requestNewApiKey, { email: inviteeEmail }
@@ -99,14 +99,14 @@ class ApiKeysControllerTest < ActionController::TestCase
   end  
   
   test "request a new key with a not owner ApiKey mut be forbidden" do
-    @request.headers['api_key'] = api_keys(:two).api_key
+    @request.headers['X-lishop-api-key'] = api_keys(:two).api_key
     inviteeEmail = 'dani_vela@me.com'
     post :requestNewApiKey, { email: inviteeEmail }    
     assert_response :forbidden
   end
   
   test "request an apikey with an invalid email must resturn interval sever error" do
-    @request.headers['api_key'] = @api_key.api_key
+    @request.headers['X-lishop-api-key'] = @api_key.api_key
     inviteeEmail = 'dani.me.com'
     post :requestNewApiKey, { email: inviteeEmail }  
     
@@ -120,25 +120,25 @@ class ApiKeysControllerTest < ActionController::TestCase
   end  
 
   test ":removeApiKey with an invalid api_key must fail" do
-    @request.headers['api_key'] = @invalid_api_key
+    @request.headers['X-lishop-api-key'] = @invalid_api_key
     post :removeApiKey, {sharedApiKey: 'guirirui@guir.com'}
     assert_response :unauthorized
   end  
 
   test ":removeApiKey without sharedApiKey: must fail" do
-    @request.headers['api_key'] = @api_key.api_key
+    @request.headers['X-lishop-api-key'] = @api_key.api_key
     post :removeApiKey
     assert_response :bad_request
   end  
 
   test ":removeApiKey with an invalid sharedApiKey: must fail" do
-    @request.headers['api_key'] = @api_key.api_key
+    @request.headers['X-lishop-api-key'] = @api_key.api_key
     post :removeApiKey, {sharedApiKey: 'guirirui@guir.com'}
     assert_response :not_found
   end  
 
   test ":removeApiKey with an valid sharedApiKey: must return ok and a list" do
-    @request.headers['api_key'] = @api_key.api_key
+    @request.headers['X-lishop-api-key'] = @api_key.api_key
     @otherUser = api_keys(:two)
     post :removeApiKey, {sharedApiKey: @otherUser.api_key}
     assert_response :ok
@@ -153,13 +153,13 @@ class ApiKeysControllerTest < ActionController::TestCase
   end  
   
   test ":sharedApiKey with an invalid api_key must fail" do
-    @request.headers['api_key'] = @invalid_api_key
+    @request.headers['X-lishop-api-key'] = @invalid_api_key
     post :sharedApiKey
     assert_response :unauthorized
   end  
 
   test ":sharedApiKey with an valid api_key must be ok and return a list" do
-    @request.headers['api_key'] = @api_key.api_key
+    @request.headers['X-lishop-api-key'] = @api_key.api_key
     post :sharedApiKey
     assert_response :ok
     object = JSON.parse(@response.body)

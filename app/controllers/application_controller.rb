@@ -6,11 +6,11 @@ class ApplicationController < ActionController::Base
   
 protected
   def checkApiKey
-    if request.headers['api_key'].nil?
+    if request.headers['X-lishop-api-key'].nil?
       head :forbidden 
     else 
       begin
-        api_key = request.headers['api_key']
+        api_key = request.headers['X-lishop-api-key']
         @api_key = ApiKey.find_by!(api_key: api_key)
         @list = @api_key.list
       rescue ActiveRecord::RecordNotFound
