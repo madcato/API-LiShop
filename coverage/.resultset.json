@@ -279,6 +279,18 @@
         null,
         1,
         null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
         null
       ],
       "/Users/danielvela/projects/API-LiShop/app/models/list.rb": [
@@ -751,6 +763,25 @@
         null,
         null
       ],
+      "/Users/danielvela/projects/API-LiShop/app/mailers/invitation_mailer.rb": [
+        1,
+        1,
+        null,
+        1,
+        null,
+        2,
+        null,
+        2,
+        2,
+        null,
+        null,
+        null,
+        null,
+        null,
+        2,
+        null,
+        null
+      ],
       "/Users/danielvela/projects/API-LiShop/app/controllers/api_keys_controller.rb": [
         1,
         1,
@@ -860,25 +891,6 @@
         null,
         null
       ],
-      "/Users/danielvela/projects/API-LiShop/app/mailers/invitation_mailer.rb": [
-        1,
-        1,
-        null,
-        1,
-        null,
-        2,
-        null,
-        2,
-        2,
-        null,
-        null,
-        null,
-        null,
-        null,
-        2,
-        null,
-        null
-      ],
       "/Users/danielvela/projects/API-LiShop/app/controllers/articles_controller.rb": [
         1,
         1,
@@ -980,6 +992,6 @@
         null
       ]
     },
-    "timestamp": 1475569346
+    "timestamp": 1475577449
   }
 }

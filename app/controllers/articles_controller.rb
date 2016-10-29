@@ -18,7 +18,7 @@ class ArticlesController < ApplicationController
     
     respond_to do |format|
       format.html # index.html.erb
-      format.json { @articles = Article.select('id') if params[:onlyIds].nil?;render :json => @articles; }
+      format.json { @articles = @list.articles.select('id') if params[:onlyIds].nil?;render :json => @articles; }
     end
   end
 

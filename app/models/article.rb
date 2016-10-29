@@ -7,5 +7,15 @@ class Article < ActiveRecord::Base
   validates :checked, presence: true, numericality: true
   
   self.inheritance_column = 'articleType'
+  
+  def objectId
+    read_attribute(:id).to_s
+  end
+  
+  def as_json(options={})
+    options.merge!({:except => [:id]})
+    result = super.as_json(options)
+    resul = result.merge({:objectId => self.objectId})
+  end
 end
 
